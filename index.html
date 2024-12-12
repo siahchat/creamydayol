@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twitter Post Design</title>
+
+  <!-- STYLE START -->
+
+  <style>
+    *,
+    *,::before,
+    *,::after {
+      box-sizing: border-box;
+    }
+    
+    * {
+      margin: 0;
+    }
+
+    :root {
+      --clr-dark: black;
+      --clr-light: white;
+
+      --clr-light-hover: rgb(224, 224, 224);
+      --clr-dark-hover: rgb(10, 10, 10);
+    }
+
+    .dark-mode {
+      --clr-dark: white;
+      --clr-light: black;
+
+      --clr-dark-hover: rgb(224, 224, 224);
+      --clr-light-hover: rgb(10, 10, 10);
+
+    }
+
+    body {
+      background-color: var(--clr-light);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      height: 100vh;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* FLEXBOX CONTAINER */
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* SIDEBAR - BLOCK 1 */
+    .block-1 {
+      width: 20%; /* Sidebar Width */
+      background-color: var(--clr-light);
+      color: var(--clr-dark);
+      padding: 1rem;
+      border-right: 1px solid #ccc;
+    }
+
+    .block-1 button {
+      background-color: var(--clr-light);
+      color: var(--clr-dark);
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 15px;
+      transition: background-color .2s;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .block-1 button:hover{
+      background-color: var(--clr-light-hover);
+    }
+
+    /* CONTENT AREA - BLOCK 2 */
+    .block-2 {
+      flex: 1; /* Fills remaining space */
+      overflow-y: auto; /* Scrollable content if needed */
+      padding: 1rem;
+    }
+
+    .wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+
+      /* Make sure rows have equal height */
+      grid-auto-rows: 1fr;
+    }
+
+    .box {
+    border: 1px solid #ccc;
+    background-color: var(--clr-light);
+    color: var(--clr-dark);
+    border-radius: 5px;
+    padding: 2rem;
+    text-align: center;
+
+    /* Ensure the box stretches evenly */
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* Title, flexible content, and footer/media */
+    gap: 1rem;
+    transition: background-color 0.3s;
+    }
+
+    .box:hover {
+      background-color: var(--clr-light-hover);
+      cursor: pointer;
+    }
+
+    .box img,
+    .box video {
+      transition: transform 0.3s;
+      border-radius: 10px;
+    }
+
+    .box img:hover {
+      transform: scale(1.03);
+    }
+
+    .box video {
+      max-width: 100%;
+    }
+
+    .tweet-form {
+      display: grid;
+      gap: 1rem;
+      margin: 1rem 0;
+      padding: 1rem;
+      background-color: var(--clr-light);
+      color: var(--clr-dark);
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .tweet-form input,
+    .tweet-form textarea {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: none;
+      background-color: var(--clr-light);
+      width: 100%;
+    }
+
+    .tweet-form #tweet-title, .tweet-form textarea{
+      border: none;
+      border-bottom: 1px solid #ccc;
+      color: var(--clr-dark);
+    }
+
+    .tweet-form #tweet-title:focus, .tweet-form textarea:focus{
+      outline: none;
+    }
+
+
+
+    .tweet-form textarea::placeholder, .tweet-form input::placeholder{
+      color: var(--clr-dark)
+    }
+
+    .tweet-form button {
+      background-color: dodgerblue;
+      color: var(--clr-dark);
+      padding: 0.5rem 1rem;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .tweet-form button:hover {
+      background-color: rgb(25, 109, 194);
+    }
+
+    /* Style the label like a button/icon */
+      .file-upload {
+        display: inline-block;
+        background-color: var(--clr-dark);
+        padding: 10px;
+        border-radius: 50%; /* Makes it circular */
+        cursor: pointer;
+        width: 2.5rem;
+        text-align: center;
+        transition: background-color 0.2s ease;
+      }
+
+    .file-upload:hover {
+      background-color: #0d8bcb; /* Darker blue on hover */
+    }
+
+    .delete-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #cc0000;
+}
+
+
+  </style>
+
+  <!-- STYLE END -->
+
+</head>
+
+<body>
+  <!-- FLEX CONTAINER -->
+  <div class="container">
+    <!-- BLOCK-1 SIDEBAR -->
+    <div class="block-1">
+      <img src="siahchat-logo.png" alt="Logo">
+      <button class="theme-toggle">Dark Mode</button>
+    </div>
+
+    <!-- BLOCK-2 MAIN CONTENT -->
+    <div class="block-2">
+
+      <div class="tweet-form">
+        <h3>Create a New Tweet</h3>
+        <input type="text" id="tweet-title" placeholder="Enter title..." />
+        <textarea id="tweet-content" placeholder="Enter content..."></textarea>
+
+        <label for="tweet-media" class="file-upload">
+          <img src="light-upload.png" id="upload-icon"> <!-- Replace this with an actual icon -->
+        </label>
+        <input type="file" id="tweet-media" accept="image/*, video/*" hidden/>
+
+
+        <button id="post-tweet">Post</button>
+      </div>
+      
+
+      <div class="wrapper">
+
+        <!-- BOX 1 -->
+        <div class="box">
+          <h2>How to cook a delicious steak.</h2>
+          <p>
+            It was a good idea. At least, they all thought it was a good idea at the time. Hindsight would reveal that in reality, it was an unbelievably terrible idea, but it would take another week for them to understand that.
+          </p>
+          <img src="maxresdefault.jpg" alt="Steak Picture">
+          <button class="delete-btn">Delete</button>
+        </div>
+
+        <!-- BOX 2 -->
+        <div class="box">
+          <h2>Pokemon was my childhood.</h2>
+          <p>
+            He couldn't move. His head throbbed and spun. He couldn't decide if it was the flu or the drinking last night. It was probably a combination of both.
+          </p>
+          <img src="poke.png" alt="Steak Picture">
+          <button class="delete-btn">Delete</button>
+        </div>
+
+        <!-- BOX 3 -->
+        <div class="box">
+          <h2>Dandadan is collabing with Ghibli Studio on a new anime.</h2>
+          <p>
+            What have you noticed today? I noticed that if you outline the eyes, nose, and mouth on your face with your finger, you make an "I".
+          </p>
+          <img src="dandadan.png" alt="Steak Picture">
+          <button class="delete-btn">Delete</button>
+        </div>
+
+        <!-- BOX 4 -->
+        <div class="box">
+          <h2>Took me 4 days straight to make this.</h2>
+          <p>
+            I've rented a car in Las Vegas and have reserved a hotel in Twentynine Palms which is just north of Joshua Tree.
+          </p>
+          <img src="coolart.png" alt="Steak Picture">
+          <button class="delete-btn">Delete</button>
+        </div>
+
+        <!-- BOX 5 -->
+        <div class="box">
+          <h2>Jasontheween beats Twitch Records by Hitting 100k Subs during FaZe Subathon</h2>
+          <p>
+            This is a video of their celebration
+          </p>
+          <video controls>
+            <source src="Download.mp4" type="video/mp4">
+          </video>
+          <button class="delete-btn">Delete</button>
+        </div>
+
+        <!-- BOX 6 -->
+        <div class="box">
+          <h2>A new video trend of the vocaloid Hatsune Miku has gone viral.</h2>
+          <p>Himitsu Dayo</p>
+          <video controls>
+            <source src="HIMITSU DAYO.mp4" type="video/mp4">
+          </video>
+          <button class="delete-btn">Delete</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    //  selectors
+      const ThemeToggleBtn = document.querySelector('.theme-toggle');
+      const uploadIcon = document.getElementById('upload-icon');
+
+    // state
+      const theme = localStorage.getItem('theme');
+
+    //  on mount
+    if (theme) {
+      document.body.classList.add(theme);
+      updateUploadIcon();
+    }
+      
+
+    // handlers
+    handleThemeToggle = () => {
+      document.body.classList.toggle('dark-mode');
+
+      if (document.body.classList.contains('dark-mode'))
+      {
+        localStorage.setItem('theme', 'dark-mode');
+      } 
+      else 
+      {
+        localStorage.removeItem('theme');
+      }
+
+      updateUploadIcon();
+    }
+
+    // events
+    ThemeToggleBtn.addEventListener('click', handleThemeToggle);
+
+
+    function updateUploadIcon() {
+  if (document.body.classList.contains('dark-mode')) {
+    uploadIcon.src = 'dark-upload.png'; // Dark mode image
+  } else {
+    uploadIcon.src = 'light-upload.png'; // Light mode image
+  }
+}
+
+
+   // Tweet Function
+const postTweetButton = document.getElementById("post-tweet");
+
+postTweetButton.addEventListener("click", () => {
+  const title = document.getElementById("tweet-title").value;
+  const content = document.getElementById("tweet-content").value;
+  const mediaFile = document.getElementById("tweet-media").files[0];
+
+  // Validate that title and content are not empty
+  if (!title || !content) {
+    alert("Please fill out both the title and content fields!");
+    return;
+  }
+
+  // Create a new box element
+  const newBox = document.createElement("div");
+  newBox.classList.add("box");
+
+  // Add the title
+  const tweetTitle = document.createElement("h2");
+  tweetTitle.textContent = title;
+
+  // Add the content
+  const tweetContent = document.createElement("p");
+  tweetContent.textContent = content;
+
+  newBox.appendChild(tweetTitle);
+  newBox.appendChild(tweetContent);
+
+  // Add media if uploaded
+  if (mediaFile) {
+    const mediaType = mediaFile.type.startsWith("image") ? "img" : "video";
+    const mediaElement = document.createElement(mediaType);
+
+    mediaElement.src = URL.createObjectURL(mediaFile);
+    mediaElement.style.maxWidth = "100%";
+    mediaElement.style.borderRadius = "10px";
+    if (mediaType === "video") {
+      mediaElement.setAttribute("controls", "controls");
+    }
+
+    newBox.appendChild(mediaElement);
+  }
+
+  // Create a delete button
+  const deleteButton = document.createElement("button");
+  deleteButton.classList.add("delete-btn");
+  deleteButton.textContent = "Delete";
+  
+  // Append the delete button to the post box
+  newBox.appendChild(deleteButton);
+
+  // Append the new box to the wrapper grid
+  const wrapper = document.querySelector(".wrapper");
+  wrapper.appendChild(newBox);
+
+  // Clear the form
+  document.getElementById("tweet-title").value = "";
+  document.getElementById("tweet-content").value = "";
+  document.getElementById("tweet-media").value = "";
+});
+
+// Event Delegation for Delete Buttons
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('delete-btn')) { // Check if Delete button is clicked
+    const post = e.target.closest('.box'); // Find the parent post (box)
+    if (post) {
+      // Confirm before deletion
+      const confirmDelete = confirm("Are you sure you want to delete this post?");
+      if (confirmDelete) {
+        post.remove(); // Remove post
+      }
+    }
+  }
+});
+
+
+  </script>
+</body>
+</html>
